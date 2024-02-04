@@ -12,7 +12,7 @@ const app = express();
 
 const mongoose = require("mongoose");
 mongoose.set("strictQuery", false);
-const mongoDB = `mongodb+srv://${username}:${password}@cluster0.bcxtiqx.mongodb.net/clubshouse?retryWrites=true&w=majority`;
+const mongoDB = `mongodb+srv://${username}:${password}@cluster0.bcxtiqx.mongodb.net/clubhouse?retryWrites=true&w=majority`;
 
 main().catch((err) => console.log(err));
 async function main() {
