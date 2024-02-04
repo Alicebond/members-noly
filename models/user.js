@@ -7,12 +7,6 @@ const UserSchema = new Schema({
   lastname: { type: String, required: true },
   username: { type: String, require: true },
   password: { type: String, required: true },
-  status: {
-    type: String,
-    required: true,
-    enum: ["member", "regular"],
-    default: "regular",
-  },
 });
 
 UserSchema.virtual("fullname").get(function () {
