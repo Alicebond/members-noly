@@ -10,11 +10,11 @@ exports.post_detail = asyncHandler(async (req, res, next) => {
 });
 
 exports.post_create_get = asyncHandler(async (req, res, next) => {
-  res.send("NOT IMPLEMENTED: Post creat GET");
+  res.send("NOT IMPLEMENTED: Post create GET");
 });
 
 exports.post_create_post = asyncHandler(async (req, res, next) => {
-  res.send("NOT IMPLEMENTED: Post creat POST");
+  res.send("NOT IMPLEMENTED: Post create POST");
 });
 
 exports.post_delete_get = asyncHandler(async (req, res, next) => {
