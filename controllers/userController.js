@@ -10,11 +10,11 @@ exports.user_detail = asyncHandler(async (req, res, next) => {
 });
 
 exports.user_creat_get = asyncHandler(async (req, res, next) => {
-  res.send("NOT IMPLEMENTED: User creat GET");
+  res.send("NOT IMPLEMENTED: User create GET");
 });
 
 exports.user_creat_post = asyncHandler(async (req, res, next) => {
-  res.send("NOT IMPLEMENTED: User creat POST");
+  res.send("NOT IMPLEMENTED: User create POST");
 });
 
 exports.user_delete_get = asyncHandler(async (req, res, next) => {
