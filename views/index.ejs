@@ -1,11 +1,22 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
   <head>
     <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel="stylesheet" href="/stylesheets/style.css" />
   </head>
   <body>
     <h1><%= title %></h1>
     <p>Welcome to <%= title %></p>
+    <% if (posts) { %>
+      <% for (let post of posts) {%>
+        <div>
+          <h3><%= post.title %></h3>
+          <p><small><%= post.createdAt %></small></p>
+          <p><%= post.content %></p>
+        </div>
+      <% } %>
+    <% } else { %>
+      <p>There is no post.</p>
+    <% } %>
   </body>
 </html>
