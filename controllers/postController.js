@@ -2,7 +2,9 @@ const Post = require("../models/post");
 const asyncHandler = require("express-async-handler");
 
 exports.post_list = asyncHandler(async (req, res, next) => {
-  res.send("NOT IMPLEMENTED: Posts list");
+  const allPosts = await Post.find().exec();
+
+  res.render("index", { title: "Club House", posts: allPosts });
 });
 
 exports.post_detail = asyncHandler(async (req, res, next) => {

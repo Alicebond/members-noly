@@ -34,11 +34,17 @@ router.get("/posts", postController.post_list);
 
 /// User Routes ///
 
+// Get request for user log in
+router.get("/log-in", userController.user_login_get);
+
+// Post request for user log in
+router.post("/log-in", userController.user_login_post);
+
 // Get request for creating a user
-router.get("/user/create", userController.user_creat_get);
+router.get("/sign-up", userController.user_creat_get);
 
 // Post request for creating a user
-router.post("/user/create", userController.user_creat_post);
+router.post("/sign-up", userController.user_creat_post);
 
 // Get request for deleting a user
 router.get("/user/:id/delete", userController.user_delete_get);

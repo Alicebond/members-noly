@@ -9,8 +9,17 @@ exports.user_detail = asyncHandler(async (req, res, next) => {
   res.send(`NOT IMPLEMENTED: User detail: ${req.params.id}`);
 });
 
+exports.user_login_get = asyncHandler(async (req, res, next) => {
+  res.send(`NOT IMPLEMENTED: User log in GET`);
+});
+
+exports.user_login_post = asyncHandler(async (req, res, next) => {
+  // TODO: Redirect to "user/:id"
+  res.send(`NOT IMPLEMENTED: User log in POST`);
+});
+
 exports.user_creat_get = asyncHandler(async (req, res, next) => {
-  res.send("NOT IMPLEMENTED: User create GET");
+  res.render("sign-up-form");
 });
 
 exports.user_creat_post = asyncHandler(async (req, res, next) => {
