@@ -3,12 +3,18 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/stylesheets/style.css" />
     <title>Clubhouse</title>
   </head>
   <body>
-    <label for="name">Username: </label>
-    <input type="text" name="name" id="name" />
-    <label for="password">Password</label>
-    <input type="text" name="password" id="password" />
+    <h2>Sign Up</h2>
+    <form method="POST">
+      <label for="name">Username: </label>
+      <input type="text" name="name" id="name" />
+      <label for="password">Password</label>
+      <input type="text" name="password" id="password" />
+    </form>
+
+    <p>Already a member? <a href="/home/log-in">Log in</a></p>
   </body>
 </html>
