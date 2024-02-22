@@ -1,18 +1,30 @@
 <!doctype html>
-<html>
+<html lang="en">
   <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title><%= title %></title>
     <link rel="stylesheet" href="/stylesheets/style.css" />
   </head>
   <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
+    <header class="header">
+      <div class="left">
+        <h1><%= title %></h1>
+        <p>Welcome to <%= title %></p>
+      </div>
+      <div class="right">
+        <button>Sign Up</button>
+        <button>Log In</button>
+      </div>
+    </header>
+    
     <% if (posts) { %>
       <% for (let post of posts) {%>
-        <div>
+        <div class="post">
           <h3><%= post.title %></h3>
           <p><small><%= post.createdAt %></small></p>
           <p><%= post.content %></p>
+          <p><a href="/home/sign-up">Become a member</a> to see the author of this post</p>
         </div>
       <% } %>
     <% } else { %>
