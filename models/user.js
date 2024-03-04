@@ -4,12 +4,18 @@ const bcrypt = require("bcrypt");
 const Schema = mongoose.Schema;
 
 const UserSchema = new Schema({
+  firstname: { type: String, require: true },
+  lastname: { type: String, require: true },
   username: { type: String, require: true },
   password: { type: String, required: true },
 });
 
 UserSchema.virtual("url").get(function () {
   return `/home/user/${this._id}`;
+});
+
+UserSchema.virtual("fullname").get(function () {
+  return `${this.firstname} ${this.lastname}`;
 });
 
 UserSchema.pre("save", function (next) {
