@@ -35,16 +35,16 @@ router.get("/posts", postController.post_list);
 /// User Routes ///
 
 // Get request for user log in
-router.get("/log-in", userController.user_login_get);
+router.get("/user/log-in", userController.user_login_get);
 
 // Post request for user log in
-router.post("/log-in", userController.user_login_post);
+router.post("/user/log-in", userController.user_login_post);
 
 // Get request for creating a user
-router.get("/sign-up", userController.user_creat_get);
+router.get("/user/sign-up", userController.user_creat_get);
 
 // Post request for creating a user
-router.post("/sign-up", userController.user_creat_post);
+router.post("/user/sign-up", userController.user_creat_post);
 
 // Get request for deleting a user
 router.get("/user/:id/delete", userController.user_delete_get);

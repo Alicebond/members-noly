@@ -18,6 +18,18 @@ a {
   margin-bottom: 50px;
 }
 
+.btn {
+  text-decoration: none;
+}
+
+.log-in {
+  margin-left: 20px;
+}
+
 .post {
   margin-bottom: 40px;
+}
+
+hr {
+  opacity: 0.3;
 }
