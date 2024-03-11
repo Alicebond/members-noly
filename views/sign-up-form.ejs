@@ -9,14 +9,39 @@
   <body>
     <h2>Sign Up</h2>
     <form method="POST">
-      <label for="username">Username: </label>
-      <input type="text" name="username" id="username" />
-      <label for="firstname">First name: </label>
-      <input type="text" name="firstname" id="firstname" />
-      <label for="lastname">Last name: </label>
-      <input type="text" name="lastname" id="lastname" />
-      <label for="password">Password</label>
-      <input type="text" name="password" id="password" />
+      <div class="form-item">
+        <label for="username">Username: </label>
+        <input type="text" name="username" id="username" />
+      </div>
+      <div class="form-item">
+        <label for="firstname">First name: </label>
+        <input type="text" name="firstname" id="firstname" />
+      </div>
+      <div class="form-item">
+        <label for="lastname">Last name: </label>
+        <input type="text" name="lastname" id="lastname" />
+      </div>
+      <div class="form-item">
+        <label for="password"
+          >Password:
+          <small><i>At least 4 characters</i></small>
+        </label>
+        <input
+          type="password"
+          name="password"
+          id="password"
+          placeholder="Passsword"
+        />
+      </div>
+      <div class="form-item">
+        <label for="password">Confirm Password: </label>
+        <input
+          type="password"
+          name="passwordConfirmation"
+          id="password"
+          placeholder="Confirm password"
+        />
+      </div>
       <button>Sign Up</button>
     </form>
 
