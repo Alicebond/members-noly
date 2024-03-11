@@ -33,3 +33,12 @@ a {
 hr {
   opacity: 0.3;
 }
+
+.form-item {
+  width: 200px;
+  margin-bottom: 10px;
+}
+
+small {
+  display: block;
+}
