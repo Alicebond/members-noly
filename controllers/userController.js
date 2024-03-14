@@ -20,7 +20,7 @@ exports.user_login_post = asyncHandler(async (req, res, next) => {
 });
 
 exports.user_creat_get = asyncHandler(async (req, res, next) => {
-  res.render("sign-up-form");
+  res.render("sign-up-form", { title: "Sign Up", errors: false });
 });
 
 exports.user_creat_post = [
@@ -42,7 +42,10 @@ exports.user_creat_post = [
     .withMessage("Last name must be specified."),
   body("password").isLength({ min: 4 }),
   body("passwordConfirmation").custom((value, { req }) => {
-    return value === req.body.password;
+    const isMatch = value === req.body.password;
+    if (!isMatch) {
+      throw new Error("Password confirmation doesn't match Password");
+    } else return true;
   }),
 
   // Process request after validation and sanitization
@@ -57,6 +60,20 @@ exports.user_creat_post = [
       username: req.body.lastname,
       password: req.body.password,
     });
+
+    if (!errors.isEmpty()) {
+      // There are errors, render form again with sanitized values/ error message
+      res.render("sign-up-form", {
+        title: "Sign Up",
+        errors: errors.array(),
+      });
+      return;
+    } else {
+      // Data is valid
+      // save new user
+      await user.save();
+      res.redirect(user.url);
+    }
   }),
 ];
 
