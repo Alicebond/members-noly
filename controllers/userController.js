@@ -1,4 +1,5 @@
 const User = require("../models/user");
+const Post = require("../models/post");
 const { body, validationResult } = require("express-validator");
 const asyncHandler = require("express-async-handler");
 
@@ -7,20 +8,48 @@ exports.user_list = asyncHandler(async (req, res, next) => {
 });
 
 exports.user_detail = asyncHandler(async (req, res, next) => {
-  res.send(`NOT IMPLEMENTED: User detail: ${req.params.id}`);
+  // res.send(`NOT IMPLEMENTED: User detail: ${req.params.id}`);
+  // Get user details and all their posts (in parallel)
+  const [user, allPostsByUser] = await Promise.all([
+    User.findById(req.params.id).exec(),
+    Post.find({ author: req.params.id }).exec(),
+  ]);
+
+  if (user === null) {
+    // No rsults
+    const err = new Error("User not found");
+    err.status = 404;
+    return next(err);
+  }
+
+  res.render("user_detail", {
+    title: "User Infomation",
+    user: user,
+    user_posts: allPostsByUser,
+  });
 });
 
 exports.user_login_get = asyncHandler(async (req, res, next) => {
-  res.send(`NOT IMPLEMENTED: User log in GET`);
+  res.render("user_login_form", { title: "Log In", errors: false });
 });
 
-exports.user_login_post = asyncHandler(async (req, res, next) => {
-  // TODO: Redirect to "user/:id"
-  res.send(`NOT IMPLEMENTED: User log in POST`);
-});
+exports.user_login_post = [
+  body("username")
+    .trim()
+    .isLength({ min: 1 })
+    .escape()
+    .withMessage("User name must be specified"),
+  body("password").isLength({ min: 4 }),
+
+  asyncHandler(async (req, res, next) => {
+    // TODO: Redirect to "user/:id"
+    const user = User.findOne({ username: req.body.username });
+    res.send(`NOT IMPLEMENTED: User log in POST`);
+  }),
+];
 
 exports.user_creat_get = asyncHandler(async (req, res, next) => {
-  res.render("sign-up-form", { title: "Sign Up", errors: false });
+  res.render("user_signup_form", { title: "Sign Up", errors: false });
 });
 
 exports.user_creat_post = [
@@ -63,7 +92,7 @@ exports.user_creat_post = [
 
     if (!errors.isEmpty()) {
       // There are errors, render form again with sanitized values/ error message
-      res.render("sign-up-form", {
+      res.render("user_signup_form", {
         title: "Sign Up",
         errors: errors.array(),
       });

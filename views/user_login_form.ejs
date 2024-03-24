@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+    <title>Log In</title>
+  </head>
+  <body>
+    <h2><%=title%></h2>
+    <form method="POST" action="">
+      <div class="form-item">
+        <label for="username">Username: </label>
+        <input type="text" name="username" id="username" placeholder="Name/E-mail..."/>
+      </div>
+      <div class="form-item">
+        <label for="password">Password: </label>
+        <input
+          type="password"
+          name="password"
+          id="password"
+          placeholder="Passsword"
+        />
+      </div>
+      <button type="submit">Sign Up</button>
+    </form>
+
+    <% if (errors) {%>
+    <ul>
+      <% for (let error of errors) {%>
+        <li><%= error.msg %></li>
+      <%}%>
+    </ul>
+    <% } %>
+    <p>Not a member? <a href="/home/user/sign-up">Sign Up</a></p>
+  </body>
+</html>
