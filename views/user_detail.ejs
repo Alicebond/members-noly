@@ -7,8 +7,9 @@
     <title>User Information</title>
   </head>
   <body>
-    <h1><%= title %></h1>
-    <h2><%= user.fullname %></h2>
+    <h1><a href="/home">Club House</a></h1>
+    <h2><%= title %></h2>
+    <h3><%= user.fullname %></h3>
 
     <% if (user_posts) { %>
       <% for (let post of user_posts) {%>
@@ -23,6 +24,6 @@
       <% } %>
     <% } else { %>
       <p>There is no post.</p>
-    <% } %>
+    <% } %> 
   </body>
 </html>

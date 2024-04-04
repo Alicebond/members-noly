@@ -3,10 +3,12 @@ const express = require("express");
 const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
+const passport = require("passport");
+const session = require("express-session");
 
 const homeRouter = require("./routes/home");
 const indexRouter = require("./routes/index");
-const { username, password } = require("./config");
+const { username, password } = require("./config/config");
 
 const app = express();
 
@@ -23,6 +25,9 @@ async function main() {
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
+app.use(session({ secret: "cat", resave: false, saveUninitialized: true }));
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
