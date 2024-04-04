@@ -2,6 +2,8 @@ const User = require("../models/user");
 const Post = require("../models/post");
 const { body, validationResult } = require("express-validator");
 const asyncHandler = require("express-async-handler");
+const passport = require("passport");
+require("../config/passport");
 
 exports.user_list = asyncHandler(async (req, res, next) => {
   res.send("NOT IMPLEMENTED: User list");
@@ -44,7 +46,11 @@ exports.user_login_post = [
   asyncHandler(async (req, res, next) => {
     // TODO: Redirect to "user/:id"
     const user = User.findOne({ username: req.body.username });
-    res.send(`NOT IMPLEMENTED: User log in POST`);
+
+    passport.authenticate("local", {
+      successRedirect: user.url,
+      // failureRedirect: "/user/sign-up",
+    });
   }),
 ];
 
