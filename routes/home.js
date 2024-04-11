@@ -40,6 +40,13 @@ router.get("/user/log-in", userController.user_login_get);
 // Post request for user log in
 router.post("/user/log-in", userController.user_login_post);
 
+router.get("/log-out", (req, res, next) => {
+  req.logout((err) => {
+    if (err) return next(err);
+    res.redirect("/");
+  });
+});
+
 // Get request for creating a user
 router.get("/user/sign-up", userController.user_creat_get);
 
