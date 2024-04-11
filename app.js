@@ -9,6 +9,7 @@ const session = require("express-session");
 const homeRouter = require("./routes/home");
 const indexRouter = require("./routes/index");
 const { username, password } = require("./config/config");
+// require("./config/passport");
 
 const app = express();
 
@@ -26,13 +27,18 @@ app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
 app.use(session({ secret: "cat", resave: false, saveUninitialized: true }));
-app.use(passport.initialize());
 app.use(passport.session());
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
+
+// app.use((req, res, next) => {
+//   console.log(req.session);
+//   console.log(req.user);
+//   next();
+// });
 
 app.use("/", indexRouter);
 app.use("/home", homeRouter);

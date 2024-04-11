@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 
 const Schema = mongoose.Schema;
 
@@ -32,10 +32,8 @@ UserSchema.pre("save", function (next) {
   });
 });
 
-UserSchema.methods.comparePassword = async function (candidatePassword, done) {
-  const isMatch = await bcrypt.compare(candidatePassword, this.password);
-  if (!isMatch) return done(null, false, { message: "Incorrect password" });
-  return done(null, this);
+UserSchema.methods.comparePassword = async function (candidatePassword) {
+  return await bcrypt.compare(candidatePassword, this.password);
 };
 
 module.exports = mongoose.model("User", UserSchema);

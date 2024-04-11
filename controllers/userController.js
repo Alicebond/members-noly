@@ -3,14 +3,47 @@ const Post = require("../models/post");
 const { body, validationResult } = require("express-validator");
 const asyncHandler = require("express-async-handler");
 const passport = require("passport");
-require("../config/passport");
+
+/////////////////////////////////////////
+/// Passport Strategy ///
+const LocalStrategy = require("passport-local").Strategy;
+
+passport.use(
+  new LocalStrategy(
+    asyncHandler(async (username, password, done) => {
+      const user = await User.findOne({ username: username });
+
+      if (user === null) {
+        return done(null, false, { message: "Incorrect user name" });
+      }
+
+      if (!user.comparePassword(password, user.password)) {
+        return done(null, false, { message: "Incorrect password" });
+      }
+
+      return done(null, user);
+    })
+  )
+);
+
+passport.serializeUser((user, done) => {
+  done(null, user.id);
+});
+
+passport.deserializeUser(
+  asyncHandler(async (id, done) => {
+    const user = await User.findById(id);
+    done(null, user);
+  })
+);
+
+///////////////////////////////////
 
 exports.user_list = asyncHandler(async (req, res, next) => {
   res.send("NOT IMPLEMENTED: User list");
 });
 
 exports.user_detail = asyncHandler(async (req, res, next) => {
-  // res.send(`NOT IMPLEMENTED: User detail: ${req.params.id}`);
   // Get user details and all their posts (in parallel)
   const [user, allPostsByUser] = await Promise.all([
     User.findById(req.params.id).exec(),
@@ -43,14 +76,10 @@ exports.user_login_post = [
     .withMessage("User name must be specified"),
   body("password").isLength({ min: 4 }),
 
-  asyncHandler(async (req, res, next) => {
-    // TODO: Redirect to "user/:id"
-    const user = User.findOne({ username: req.body.username });
-
-    passport.authenticate("local", {
-      successRedirect: user.url,
-      // failureRedirect: "/user/sign-up",
-    });
+  passport.authenticate("local", {
+    successRedirect: "/",
+    failureRedirect: "/user/log-in",
+    failureMessage: true,
   }),
 ];
 
@@ -92,7 +121,7 @@ exports.user_creat_post = [
     const user = new User({
       firstname: req.body.firstname,
       lastname: req.body.lastname,
-      username: req.body.lastname,
+      username: req.body.username,
       password: req.body.password,
     });
 

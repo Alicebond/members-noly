@@ -8,7 +8,7 @@
   </head>
   <body>
     <h1><a href="/home">Club House</a></h1>
-    <h2><%= title %></h2>
+    <h2><%= title ? title : "Logged In!" %></h2>
     <h3><%= user.fullname %></h3>
 
     <% if (user_posts) { %>
@@ -25,5 +25,6 @@
     <% } else { %>
       <p>There is no post.</p>
     <% } %> 
+    <p><a href="/log-out">Log out</a></p>
   </body>
 </html>
