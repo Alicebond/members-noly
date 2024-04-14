@@ -9,13 +9,17 @@
   <body>
     <header class="header">
       <div class="left">
-        <h1><%= title %></h1>
+        <h1><a href="/home"><%= title %></a></h1>
         <p>Welcome to <%= title %></p>
       </div>
       <div class="right">
-        <a class="btn log-out" href="/home/log-out">Log Out</a>
-        <a class="btn sign-up" href="/home/user/sign-up">Sign Up</a>
-        <a class="btn log-in" href="/home/user/log-in">Log In</a>
+        <% if (user) { %>
+          <p>Welcome back <b><%= user.fullname %></b></p>
+          <a class="btn log-out" href="/home/log-out">Log Out</a> 
+        <%} else {%>
+          <a class="btn sign-up" href="/home/user/sign-up">Sign Up</a>
+          <a class="btn log-in" href="/home/user/log-in">Log In</a>
+        <% } %>
       </div>
     </header>
     
@@ -23,14 +27,18 @@
       <% for (let post of posts) {%>
         <div class="post">
           <h2><%= post.title %></h2>
+          <% if (user) {%>
           <p>
             <strong><%= post.author.fullname %></strong>
           </p>
+          <% } %>
           <p class="post-info">
             <i><small><%= post.updatedAtFormatted || post.createdAtFormatted %></small></i>
           </p>
           <p><%= post.content %></p>
-          <p><a href="/home/user/sign-up">Become a member</a> to see the author of this post</p>
+          <% if (!user) { %>
+            <p><a href="/home/user/sign-up">Become a member</a> to see the author of this post</p>
+          <% } %>
         </div>
         <hr />
       <% } %>
