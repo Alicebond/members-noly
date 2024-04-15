@@ -7,7 +7,7 @@
     <title>Log In</title>
   </head>
   <body>
-    <h1><a href="/home">Club House</a></h1>
+    <h1><a href="/home">Posts Club</a></h1>
     <h2><%=title%></h2>
     <form method="POST" action="">
       <div class="form-item">
@@ -27,10 +27,8 @@
     </form>
 
     <% if (errors) {%>
-    <ul>
-      <% for (let error of errors) {%>
-        <li><%= error.msg %></li>
-      <%}%>
+    <ul class="errors">    
+        <li class="error-msg"><%= errors[errors.length - 1] %></li>
     </ul>
     <% } %>
     <p>Not a member? <a href="/home/user/sign-up">Sign Up</a></p>

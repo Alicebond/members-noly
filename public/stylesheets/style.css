@@ -43,3 +43,9 @@ hr {
 small {
   display: block;
 }
+
+.errors {
+  list-style: none;
+  color: red;
+  padding: 0;
+}

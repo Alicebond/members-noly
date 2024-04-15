@@ -8,6 +8,7 @@ exports.post_list = asyncHandler(async (req, res, next) => {
     title: "Posts Club",
     posts: allPosts,
     user: req.user ? req.user : false,
+    isLoggedIn: req.isAuthenticated() ? req.isAuthenticated() : false,
   });
 });
 
