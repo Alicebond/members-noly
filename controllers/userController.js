@@ -17,7 +17,7 @@ passport.use(
         return done(null, false, { message: "Incorrect user name" });
       }
 
-      if (!user.comparePassword(password, user.password)) {
+      if (!(await user.comparePassword(password, user.password))) {
         return done(null, false, { message: "Incorrect password" });
       }
 
@@ -65,7 +65,10 @@ exports.user_detail = asyncHandler(async (req, res, next) => {
 });
 
 exports.user_login_get = asyncHandler(async (req, res, next) => {
-  res.render("user_login_form", { title: "Log In", errors: false });
+  res.render("user_login_form", {
+    title: "Log In",
+    errors: req.session.messages ? req.session.messages : false,
+  });
 });
 
 exports.user_login_post = [
@@ -78,7 +81,7 @@ exports.user_login_post = [
 
   passport.authenticate("local", {
     successRedirect: "/",
-    failureRedirect: "/user/log-in",
+    failureRedirect: "/home/user/log-in",
     failureMessage: true,
   }),
 ];
