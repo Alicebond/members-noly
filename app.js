@@ -8,7 +8,7 @@ const session = require("express-session");
 
 const homeRouter = require("./routes/home");
 const indexRouter = require("./routes/index");
-const { username, password } = require("./config/config");
+const { username, password, secret } = require("./config/config");
 // require("./config/passport");
 
 const app = express();
@@ -26,13 +26,22 @@ async function main() {
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
-app.use(session({ secret: "cat", resave: false, saveUninitialized: true }));
-app.use(passport.session());
-app.use(logger("dev"));
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(logger("dev"));
+app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
+app.use(
+  session({
+    secret: secret,
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      maxAge: 60000 * 60, // an hour
+    },
+  })
+);
+app.use(passport.session());
 
 // app.use((req, res, next) => {
 //   console.log(req.session);
