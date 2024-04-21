@@ -65,10 +65,17 @@ exports.user_detail = asyncHandler(async (req, res, next) => {
 });
 
 exports.user_login_get = asyncHandler(async (req, res, next) => {
-  res.render("user_login_form", {
-    title: "Log In",
-    errors: req.session.messages ? req.session.messages : false,
-  });
+  res.render(
+    "user_login_form",
+    {
+      title: "Log In",
+      errors: req.session.messages ? req.session.messages : false,
+    },
+    function (err, html) {
+      req.session.messages = [];
+      res.send(html);
+    }
+  );
 });
 
 exports.user_login_post = [
@@ -139,7 +146,7 @@ exports.user_creat_post = [
       // Data is valid
       // save new user
       await user.save();
-      res.redirect(user.url);
+      res.redirect("/home/user/log-in");
     }
   }),
 ];
