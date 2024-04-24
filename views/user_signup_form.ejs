@@ -49,12 +49,12 @@
     </form>
 
     <% if (errors) {%>
-    <ul>
+    <ul class="errors">
       <% for (let error of errors) {%>
         <li><%= error.msg %></li>
       <%}%>
     </ul>
     <% } %>
-    <p>Already a member? <a href="/home/user/log-in">Log in</a></p>
+    <p>Already have an account? <a href="/home/user/log-in">Log in</a></p>
   </body>
 </html>
