@@ -4,4 +4,5 @@ module.exports = {
   username: process.env.NAME,
   password: process.env.PASSWORD,
   secret: process.env.SESSION_SECRET,
+  membercode: process.env.MEMBERCODE,
 };

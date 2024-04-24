@@ -84,13 +84,37 @@ exports.user_login_post = [
     .isLength({ min: 1 })
     .escape()
     .withMessage("User name must be specified"),
-  body("password").isLength({ min: 4 }),
+  body("password").trim().isLength({ min: 4 }),
 
   passport.authenticate("local", {
     successRedirect: "/",
     failureRedirect: "/home/user/log-in",
     failureMessage: true,
   }),
+];
+
+exports.user_logout_get = asyncHandler(async (req, res, next) => {
+  req.logout((err) => {
+    if (err) return next(err);
+    res.redirect("/");
+  });
+});
+
+exports.join_club_get = asyncHandler(async (req, res, next) => {
+  if (req.isAuthenticated()) {
+    res.render("join_club_form", { isLoggedIn: true });
+  } else {
+    res.render("join_club_form", { isLoggedIn: false });
+  }
+});
+
+exports.join_club_post = [
+  body("password")
+    .trim()
+    .escape()
+    .isNumeric()
+    .isLength({ min: 4 })
+    .withMessage("Wrong passcode"),
 ];
 
 exports.user_creat_get = asyncHandler(async (req, res, next) => {

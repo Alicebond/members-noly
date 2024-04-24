@@ -15,7 +15,7 @@
       <div class="right">
         <% if (user) { %>
           <p>Welcome back <b><%= user.fullname %></b></p>
-          <a class="btn log-out" href="/home/log-out">Log Out</a> 
+          <a class="btn log-out" href="/home/user/log-out">Log Out</a> 
         <%} else {%>
           <a class="btn sign-up" href="/home/user/sign-up">Sign Up</a>
           <a class="btn log-in" href="/home/user/log-in">Log In</a>
@@ -27,7 +27,7 @@
       <% for (let post of posts) {%>
         <div class="post">
           <h2><%= post.title %></h2>
-          <% if (user) {%>
+          <% if (isMember) {%>
           <p>
             <strong><%= post.author.fullname %></strong>
           </p>
@@ -36,8 +36,8 @@
             <i><small><%= post.updatedAtFormatted || post.createdAtFormatted %></small></i>
           </p>
           <p><%= post.content %></p>
-          <% if (!user) { %>
-            <p><a href="/home/user/sign-up">Become a member</a> to see the author of this post</p>
+          <% if (!isMember) { %>
+            <p><a href="/home/user/member">Become a member</a> to see the author of this post</p>
           <% } %>
         </div>
         <hr />

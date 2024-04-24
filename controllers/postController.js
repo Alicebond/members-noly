@@ -9,6 +9,7 @@ exports.post_list = asyncHandler(async (req, res, next) => {
     posts: allPosts,
     user: req.user ? req.user : false,
     isLoggedIn: req.isAuthenticated() ? req.isAuthenticated() : false,
+    isMember: req.user?.isMember ? req.user.isMember : false,
   });
 });
 

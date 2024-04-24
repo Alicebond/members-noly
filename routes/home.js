@@ -40,12 +40,11 @@ router.get("/user/log-in", userController.user_login_get);
 // Post request for user log in
 router.post("/user/log-in", userController.user_login_post);
 
-router.get("/log-out", (req, res, next) => {
-  req.logout((err) => {
-    if (err) return next(err);
-    res.redirect("/");
-  });
-});
+router.get("/user/log-out", userController.user_logout_get);
+
+router.get("/user/member", userController.join_club_get);
+
+router.post("/user/member", userController.join_club_post);
 
 // Get request for creating a user
 router.get("/user/sign-up", userController.user_creat_get);
