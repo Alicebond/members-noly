@@ -91,6 +91,10 @@ exports.user_login_post = [
     failureRedirect: "/home/user/log-in",
     failureMessage: true,
   }),
+
+  (err, req, res, next) => {
+    if (err) next(err);
+  },
 ];
 
 exports.user_logout_get = asyncHandler(async (req, res, next) => {

@@ -5,6 +5,7 @@ const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const passport = require("passport");
 const session = require("express-session");
+const MongoStore = require("connect-mongo");
 
 const homeRouter = require("./routes/home");
 const indexRouter = require("./routes/index");
@@ -39,6 +40,7 @@ app.use(
     cookie: {
       maxAge: 60000 * 60, // an hour
     },
+    store: MongoStore.create({ mongoUrl: mongoDB }),
   })
 );
 app.use(passport.session());
