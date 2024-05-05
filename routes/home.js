@@ -40,7 +40,7 @@ router.get("/user/log-in", userController.user_login_get);
 // Post request for user log in
 router.post("/user/log-in", userController.user_login_post);
 
-router.get("/user/log-out", userController.user_logout_get);
+router.post("/user/log-out", userController.user_logout_post);
 
 router.get("/user/member", userController.join_club_get);
 

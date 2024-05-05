@@ -3,6 +3,7 @@ const Post = require("../models/post");
 const { body, validationResult } = require("express-validator");
 const asyncHandler = require("express-async-handler");
 const passport = require("passport");
+const { membercode } = require("../config/config");
 
 /////////////////////////////////////////
 /// Passport Strategy ///
@@ -97,28 +98,51 @@ exports.user_login_post = [
   },
 ];
 
-exports.user_logout_get = asyncHandler(async (req, res, next) => {
+exports.user_logout_post = asyncHandler(async (req, res, next) => {
+  res.clearCookie("connect.sid");
   req.logout((err) => {
     if (err) return next(err);
-    res.redirect("/");
+    req.session.destroy(function (err) {
+      if (err) return next(err);
+      res.redirect("/");
+    });
   });
 });
 
 exports.join_club_get = asyncHandler(async (req, res, next) => {
-  if (req.isAuthenticated()) {
-    res.render("join_club_form", { isLoggedIn: true });
-  } else {
-    res.render("join_club_form", { isLoggedIn: false });
-  }
+  res.render("join_club_form", {
+    isLoggedIn: req.isAuthenticated() ? req.isAuthenticated() : false,
+    errors: false,
+  });
 });
 
 exports.join_club_post = [
-  body("password")
+  body("membercode")
     .trim()
     .escape()
     .isNumeric()
     .isLength({ min: 4 })
     .withMessage("Wrong passcode"),
+
+  asyncHandler(async (req, res, next) => {
+    const errors = validationResult(req);
+
+    if (req.body.membercode === membercode && errors.isEmpty()) {
+      await User.findByIdAndUpdate(
+        req.user.id,
+        {
+          isMember: true,
+        },
+        { new: true }
+      );
+      res.redirect("/home");
+    } else {
+      res.render("join_club_form", {
+        isLoggedIn: req.isAuthenticated() ? req.isAuthenticated() : false,
+        errors: errors.array(),
+      });
+    }
+  }),
 ];
 
 exports.user_creat_get = asyncHandler(async (req, res, next) => {
@@ -161,6 +185,7 @@ exports.user_creat_post = [
       lastname: req.body.lastname,
       username: req.body.username,
       password: req.body.password,
+      isMember: false,
     });
 
     if (!errors.isEmpty()) {

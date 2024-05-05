@@ -7,15 +7,24 @@
     <title>Join Club</title>
   </head>
   <body>
-    <h1>Join Club</h1>
+    <h1><a href="/home">Posts Club</a></h1>
+    <h2>Join Club</h2>
     <% if (!isLoggedIn) {%>
-      <h4>Please <a href="/user/log-in">log in</a> first</h4>
+      <h4>Please <a href="/home/user/log-in">log in</a> first</h4>
     <%} else {%>
       <h4>Enter the passcode to become a member!</h4>
       <form method="POST" action="">
         <label for="membercode">Passcode:</label>
         <input type="password" id="membercodee" name="membercode" class="membercode" />
+        <button>Submit</button>
       </form>
+      <% if (errors) {%>
+        <ul class="errors">
+          <% for (let error of errors) {%>
+            <li><%= error.msg %></li>
+          <%}%>
+        </ul>
+        <% } %>
     <%}%>
   </body>
 </html>
